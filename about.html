@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop fresh groceries, fruits, vegetables, and more. Get discounts and fast delivery!">
+  <meta name="keywords" content="grocery, fruits, vegetables, online shopping">
+  <meta name="author" content="Abudul Salam Sahadatu">
+  <title>Veggie - Supper Marvelous Groceries in town!</title>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'GA_TRACKING_ID');
+    </script>
+  
+  
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="images/our logo.jpg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Rubik:wght@400;500;600;700&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="images/hero-banner.png" media="min-width(768px)">
+  <link rel="preload" as="image" href="images/hero-banner-bg.png" media="min-width(768px)">
+  <link rel="preload" as="image" href="images/hero-bg.jpg">
+
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+<!-- Updated Header -->
+<header class="header" data-header>
+  <div class="container">
+
+    <h1>
+      <a href="/index.html" class="logo" aria-label="Go to Home"><img src="/images/our logo.jpg"  alt="logo"></a>
+    </h1>
+
+    <nav class="navbar" data-navbar>
+     
+      <ul class="navbar-list">
+        <li class="nav-item">
+          <a href="/index.html" class="navbar-link" data-nav-link aria-label="Go to Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about.html" class="navbar-link" data-nav-link aria-label="Learn more about us">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="/Product.html" class="navbar-link" data-nav-link aria-label="View products">Product</a>
+        </li>
+        <li class="nav-item">
+          <a href="/blog.html" class="navbar-link" data-nav-link aria-label="Read our blog">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="cart-icon" class="navbar-link" data-nav-link aria-label="Shopping cart">
+            <i class="fa fa-shopping-cart"></i></a>
+          <span id="cart-notification">0</span> <!-- Cart item count -->
+        </li>
+
+        <li class="nav-item">
+          <a href="/contact.html" class="navbar-link" data-nav-link aria-label="Contact us">Contact Us</a>
+        </li>
+       
+        <li class="nav-item">
+          <a href="/login.html" class="navbar-link" data-nav-link aria-label="SignUp">SignUp</a>
+        </li>
+        <li class="search-item">
+          <a href="#" class="navbar-link" data-nav-link><i class="fa fa-search" aria-label="Search products" onclick="searchProducts()"></i></a>
+          <input type="text" id="search-input" class="search-input" placeholder="Search for products..." aria-label="Search" oninput="searchProducts()">
+        </li>
+      </ul>
+
+      <!-- Search Popup -->
+      <div class="search-container">
+        <div id="search-popup" class="search-popup" style="display: none;">
+          <img id="popup-image" src="" alt="Product Image" loading="lazy" />
+          <div>
+            <h3 id="popup-title"></h3>
+            <p id="popup-price"></p>
+          </div>
+        </div>
+      </div>
+      <p id="no-results-message" style="display: none;">No results found!</p>
+    </nav>
+
+    <button class="nav-toggle-btn" aria-label="Toggle Menu" data-menu-toggle-btn>
+      <span class="line top"></span>
+      <span class="line middle"></span>
+      <span class="line bottom"></span>
+    </button>
+  </div>
+</header>
+      
+
+
+  <div class="shop">
+    <!-- Shopping Cart (Hidden until toggle) -->
+    <div id="cart-modal" class="modal" style="display:none;">
+      <h2>Your Orders!</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="total-price">0.00</span></p>
+      <button class="btn" onclick="checkout()">Proceed to Payment</button>
+    </div>
+  </div>
+  
+  <!-- Payment Section (Hidden by default) -->
+ <section id="payment-section" style="display:none;">
+  <div class="close-btn" onclick="closePaymentSection()">✖</div>
+  <h2>Payment</h2>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+      <div class="progress" id="progress" style="width: 33%;"></div>
+  </div>
+
+  <form id="payment-form">
+      <!-- Card Details -->
+      <label for="card-number">Card Number</label>
+      <input type="text" id="card-number" name="card-number" placeholder="card-number" required>
+      <label for="expiry">Expiry Date</label>
+      <input type="date" id="expiry" name="expiry" placeholder="card-date" required>
+      <label for="cvc">CVC</label>
+      <input type="text" id="cvc" name="cvc" placeholder="cvc" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="your-email@example.com" required>
+
+      <!-- Delivery Options -->
+      <label for="delivery-options">Choose Delivery Method:</label>
+      <select id="delivery-options" onchange="updateDeliveryFee()">
+          <option value="10" data-info="Arrives in 3-5 days">Standard Delivery ($10)</option>
+          <option value="20" data-info="Arrives in 1-2 days">Express Delivery ($20)</option>
+          <option value="0" data-info="Free for orders over $100">Free Shipping</option>
+      </select>
+      <span id="delivery-tooltip" class="tooltip"></span>
+
+      <!-- Discount Code -->
+      <div class="discount-section">
+          <label for="discount-code">Apply Discount Code:</label>
+          <input type="text" id="discount-code" placeholder="Enter code">
+          <button type="button" onclick="applyDiscount()">Apply</button>
+          <p id="discount-feedback"></p>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Submit Payment</button>
+  </form>
+
+  <div id="spinner" class="spinner" style="display:none;">Please wait while we process your payment...</div>
+
+  <!-- Receipt (Hidden by default) -->
+  <div id="receipt" style="display:none;">
+      <h3>Receipt</h3>
+      <ul id="receipt-items"></ul>
+      <p id="tax-rate"></p>
+      <p id="delivery-fee"></p>
+      <p>Total Before Tax: $<span id="total-before-tax"></span></p>
+      <p>Total Amount (after tax): $<span id="total-amount"></span></p>
+  </div>
+</section>
+
+  
+  
+
+
+  <main>
+    <article>
+
+      <!-- 
+        -...................... #HERO..........................
+      -->
+
+      <section class="hero" id="home" style="background-image: url('images/FRESH1.jpg')">
+         <!---about-->
+
+
+         <section class="about-us-section" id="about">
+          <h1>about us</h1>
+          <div class="about-image">
+              <img src="images/WhatsApp Image 2024-09-04 at 8.55.57 AM.jpeg" alt="About Us Background">
+              <div class="about-text">
+                  <h1 class="about-us-heading">About Us</h1>
+                  <p>Welcome to our world! We are dedicated to delivering exceptional experiences through innovation and dedication. Our team is committed to turning your visions into reality with creativity, expertise, and passion. Discover more about our dedicated team and how we can help you achieve excellence.</p>
+              </div>
+          </div>
+          
+          <h2 class="teamtittle">our team</h2>
+          <div class="team-container">
+              <div class="team-member">
+                  <img src="images/WhatsApp Image 2024-09-04 at 8.24.22 AM (1).jpeg" alt="Jane Doe">
+                  <div class="member-info">
+                      <h2>kuumson Doe</h2>
+                      
+                      <p> Cashier <br>
+      Processes transactions, handles payments, and issues receipts. <br>
+        Assists with returns and exchanges. <br>
+        Ensures a smooth checkout experience.</p>
+      </div>
+      </div>
+      <div class="team-member">
+      <img src="images/WhatsApp Image 2024-09-04 at 8.24.23 AM.jpeg" alt="John Smith">
+      <div class="member-info">
+      <h2>Gosphine</h2>
+      <p>Store Manager <br>
+        Oversees store operations and staff. <br>
+        Manages budgeting and financial reporting. <br>
+        Ensures sales targets and store policies are met. .</p>
+      </div>
+      </div>
+      <div class="team-member">
+      <img src="images/WhatsApp Image 2024-08-15 at 6.14.11 AM.jpeg" alt="Emily Johnson">
+      <div class="member-info">
+      <h2>AbdulMlik</h2>
+      <p> Floor Supervisor <br>
+        Manages store floor activities and staff. <br>
+        Ensures adherence to procedures . <br>
+        Oversees customer service on the floor</p>
+      </div>
+      </div>
+      
+      
+      <div class="team-member">
+      <img src="images/WhatsApp Image 2024-08-15 at 6.14.10 AM.jpeg" alt="Emily Johnson">
+      <div class="member-info">
+      <h2>Emilli Johnson</h2>
+      <p>Grocery Bagger <br>
+       Packs purchased items into <br>
+        Assists customers with carrying their bags if needed. <br>
+        Ensures bags are packed efficiently.</p>
+      </div>
+      </div>  
+      </div>
+      </section>
+
+    
+
+
+
+
+
+
+      <!---...................our live stream......................-->
+
+
+      <div class="video-container">
+        <div class="video-wrapper">
+          <h2 class="video-title">Product Demo</h2>
+          <video class="autoplay-video" muted loop playsinline>
+            <source src="images/SERVICE V3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="video-caption">This is a demonstration of our product in action, showcasing key features.</p>
+        </div>
+        
+        <div class="video-wrapper">
+          <h2 class="video-title">User Testimonial</h2>
+          <video class="autoplay-video" muted loop playsinline>
+            <source src="images/SERVICE V1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="video-caption">Hear from one of our satisfied customers about their experience.</p>
+        </div>
+        
+        <div class="video-wrapper">
+          <h2 class="video-title">Behind the Scenes</h2>
+          <video class="autoplay-video" muted loop playsinline>
+            <source src="images/SERVICE V.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="video-caption">Go behind the scenes to see how our team brings ideas to life.</p>
+        </div>
+      </div>
+
+      
+      <!-- 
+        - ...............#TESTIMONIALS.............
+      -->
+
+      <section class="section section-divider white testi">
+        <div class="container">
+
+          <p class="section-subtitle">Testimonials</p>
+
+          <h2 class="h2 section-title">
+            Our Customers <span class="span">Reviews</span>
+          </h2>
+
+          <p class="section-text">
+            Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+          </p>
+
+          <ul class="testi-list has-scrollbar">
+
+            <li class="testi-item">
+              <div class="testi-card">
+
+                <div class="profile-wrapper">
+
+                  <figure class="avatar">
+                    <img src="images/avatar-1.jpg" width="80" height="80" loading="lazy" alt="Robert William">
+                  </figure>
+
+                  <div>
+                    <h3 class="h4 testi-name">Robert William</h3>
+
+                    <p class="testi-title">CEO Kingfisher</p>
+                  </div>
+
+                </div>
+
+                <blockquote class="testi-text">
+                  "I would be lost without groceries. I would like to personally thank you for your outstanding
+                  product."
+                </blockquote>
+
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testi-item">
+              <div class="testi-card">
+
+                <div class="profile-wrapper">
+
+                  <figure class="avatar">
+                    <img src="images/avatar-2.jpg" width="80" height="80" loading="lazy" alt="Thomas Josef">
+                  </figure>
+
+                  <div>
+                    <h3 class="h4 testi-name">Thomas Josef</h3>
+
+                    <p class="testi-title">CEO Getforce</p>
+                  </div>
+
+                </div>
+
+                <blockquote class="testi-text">
+                  "I would be lost without groceries. I would like to personally thank you for your outstanding
+                  product."
+                </blockquote>
+
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testi-item">
+              <div class="testi-card">
+
+                <div class="profile-wrapper">
+
+                  <figure class="avatar">
+                    <img src="images/avatar-3.jpg" width="80" height="80" loading="lazy" alt="Charles Richard">
+                  </figure>
+
+                  <div>
+                    <h3 class="h4 testi-name">Charles Richard</h3>
+
+                    <p class="testi-title">CEO Angela</p>
+                  </div>
+
+                </div>
+
+                <blockquote class="testi-text">
+                  "I would be lost without groceries. I would like to personally thank you for your outstanding
+                  product."
+                </blockquote>
+
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+
+
+      
+       
+      </section>
+
+
+
+      
+       
+  
+  </main>
+
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright-text">
+          &copy; 2022 <a href="#" class="copyright-link">codewithsahadee</a> All Rights Reserved.
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
+    <ion-icon name="chevron-up"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

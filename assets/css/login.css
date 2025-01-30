@@ -1,0 +1,171 @@
+/* Body Styling */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(240, 204, 204, 0.8) url('/images/FRESH1.jpg') no-repeat center;
+    background-size: cover;
+    position: relative;
+}
+
+.logo img{
+    position: relative;
+    display: flex;
+    top: -200px;
+    right: 250px;
+    height: auto;
+    max-width: 100%;
+    width: 150px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #f3f3f3;
+    border: 2px solid;
+  }
+/* Form Section Styling */
+.form-section {
+    position: relative;
+    width: 90%; /* Adjust width for responsiveness */
+    max-width: 400px; /* Maximum width */
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    color: #fff;
+}
+
+/* Header Styling */
+.form-section h1 {
+    font-size: 28px; /* Adjusted font size for smaller screens */
+    text-align: center;
+    text-transform: uppercase;
+    margin: 20px 0; /* Reduced margin */
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+/* Paragraph Styling */
+.form-section p {
+    color: white;
+    font-size: 16px; /* Adjusted font size for smaller screens */
+    margin: 10px 0;
+}
+
+/* Input Field Styling */
+.form-section input {
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Button Styling */
+.form-section button {
+    font-size: 16px; /* Adjusted font size for smaller screens */
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: #eb0606;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-section button:hover {
+    background-color: #f44366;
+}
+
+/* Loader Styling */
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Spinner Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Link Styling */
+.form-section a {
+    color: #f44366;
+    text-decoration: none;
+}
+
+.form-section a:hover {
+    text-decoration: underline;
+}
+
+/* Social Media Section Styling */
+.social-media h3 {
+    font-family: 'Arial', sans-serif;
+    color: #41f809;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-media a {
+    padding-left: 10px;
+    display: inline-flex;
+    color: white;
+    text-decoration: none;
+}
+
+.social-media a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .form-section {
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
+
+    .form-section h1 {
+        font-size: 24px; /* Smaller header font size */
+    }
+
+    .form-section p {
+        font-size: 14px; /* Smaller paragraph font size */
+    }
+
+    .form-section button {
+        font-size: 14px; /* Smaller button font size */
+    }
+
+    .form-section input {
+        padding: 8px; /* Reduce padding in input fields */
+    }
+}
+
+@media (max-width: 400px) {
+    .form-section {
+        width: 95%; /* Slightly adjust width for very small screens */
+    }
+
+    .form-section h1 {
+        font-size: 22px; /* Further reduce header size */
+    }
+
+    .form-section p {
+        font-size: 12px; /* Further reduce paragraph size */
+    }
+}

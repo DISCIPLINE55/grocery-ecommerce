@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <h1 class="logo">
+      <a href="/index.html" class="logo" aria-label="Go to Home"><img src="/images/our logo.jpg"  alt="logo"></a>
+    </h1>
+    <section class="auth">
+        <!-- Login Section -->
+        <div id="login-section" class="form-section">
+            <h1>Login</h1>
+            <form id="login-form">
+                <p>Username:</p>
+                <input type="text" id="login-username" name="username" placeholder="Username" required aria-label="Username">
+                <p>Password:</p>
+                <input type="password" id="login-password" name="password" placeholder="Password" required aria-label="Password">
+                <button type="submit">Login</button>
+                <div id="login-message" class="message"></div> <!-- Feedback message -->
+            </form>
+            <p>Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+            <div class="social-media">
+                <h3>Follow us:</h3>
+                <a href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i> Facebook</a>
+                <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i> Twitter</a>
+                <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i> Instagram</a>
+                <a href="https://whatsapp.com" target="_blank"><i class="fa fa-whatsapp"></i> WhatsApp</a>
+                <a href="https://linkedin.com" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com" target="_blank"><i class="fa fa-github"></i> Github</a>
+            </div>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="registration-section" class="form-section" style="display: none;">
+            <h1>Register</h1>
+            <form id="registration-form">
+                <p>Full Name:</p>
+                <input type="text" id="fullname" name="fullname" placeholder="Full Name" required aria-label="Full Name">
+                <p>Username:</p>
+                <input type="text" id="reg-username" name="username" placeholder="Username" required aria-label="Username">
+                <p>Email:</p>
+                <input type="email" id="email" name="email" placeholder="Email" required aria-label="Email">
+                <p>Password:</p>
+                <input type="password" id="reg-password" name="password" placeholder="Password" required aria-label="Password">
+                <button type="submit">Register</button>
+                <div id="loader" class="loader" style="display: none;"></div>
+                <div id="reg-message" class="message"></div> <!-- Feedback message -->
+            </form>
+            <p>Already have an account? <a href="#" id="showLogin">Login here</a></p>
+        </div>
+    </section>
+    <script src="assets/js/login.js"></script>
+</body>
+</html>

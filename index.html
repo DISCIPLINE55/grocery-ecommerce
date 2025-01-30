@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop fresh groceries, fruits, vegetables, and more. Get discounts and fast delivery!">
+  <meta name="keywords" content="grocery, fruits, vegetables, online shopping">
+  <meta name="author" content="Abudul Salam Sahadatu">
+  <title>Veggie - Supper Marvelous Groceries in town!</title>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'GA_TRACKING_ID');
+    </script>
+  
+  
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="images/our logo.jpg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Rubik:wght@400;500;600;700&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="images/hero-banner.png" media="min-width(768px)">
+  <link rel="preload" as="image" href="images/hero-banner-bg.png" media="min-width(768px)">
+  <link rel="preload" as="image" href="images/hero-bg.jpg">
+
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+<!-- Updated Header -->
+<header class="header" data-header>
+  <div class="container">
+
+    <h1>
+      <a href="#home" class="logo" aria-label="Go to Home"><img src="/images/our logo.jpg"  alt="logo"></a>
+    </h1>
+
+    <nav class="navbar" data-navbar>
+     
+      <ul class="navbar-list">
+        <li class="nav-item">
+          <a href="#home" class="navbar-link" data-nav-link aria-label="Go to Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about.html" class="navbar-link" data-nav-link aria-label="Learn more about us">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="/Product.html" class="navbar-link" data-nav-link aria-label="View products">Product</a>
+        </li>
+        <li class="nav-item">
+          <a href="/blog.html" class="navbar-link" data-nav-link aria-label="Read our blog">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="cart-icon" class="navbar-link" data-nav-link aria-label="Shopping cart">
+            <i class="fa fa-shopping-cart"></i></a>
+          <span id="cart-notification">0</span> <!-- Cart item count -->
+        </li>
+
+        <li class="nav-item">
+          <a href="/contact.html" class="navbar-link" data-nav-link aria-label="Contact us">Contact Us</a>
+        </li>
+       
+        <li class="nav-item">
+          <a href="/login.html" class="navbar-link" data-nav-link aria-label="SignUp">SignUp</a>
+        </li>
+        <li class="search-item">
+          <a href="#" class="navbar-link" data-nav-link><i class="fa fa-search" aria-label="Search products" onclick="searchProducts()"></i></a>
+          <input type="text" id="search-input" class="search-input" placeholder="Search for products..." aria-label="Search" oninput="searchProducts()">
+        </li>
+      </ul>
+
+      <!-- Search Popup -->
+      <div class="search-container">
+        <div id="search-popup" class="search-popup" style="display: none;">
+          <img id="popup-image" src="" alt="Product Image" loading="lazy" />
+          <div>
+            <h3 id="popup-title"></h3>
+            <p id="popup-price"></p>
+          </div>
+        </div>
+      </div>
+      <p id="no-results-message" style="display: none;">No results found!</p>
+    </nav>
+
+    <button class="nav-toggle-btn" aria-label="Toggle Menu" data-menu-toggle-btn>
+      <span class="line top"></span>
+      <span class="line middle"></span>
+      <span class="line bottom"></span>
+    </button>
+  </div>
+</header>
+      
+
+
+  <div class="shop">
+    <!-- Shopping Cart (Hidden until toggle) -->
+    <div id="cart-modal" class="modal" style="display:none;">
+      <h2>Your Orders!</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="total-price">0.00</span></p>
+      <button class="btn" onclick="checkout()">Proceed to Payment</button>
+    </div>
+  </div>
+  
+  <!-- Payment Section (Hidden by default) -->
+ <section id="payment-section" style="display:none;">
+  <div class="close-btn" onclick="closePaymentSection()">✖</div>
+  <h2>Payment</h2>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+      <div class="progress" id="progress" style="width: 33%;"></div>
+  </div>
+
+  <form id="payment-form">
+      <!-- Card Details -->
+      <label for="card-number">Card Number</label>
+      <input type="text" id="card-number" name="card-number" placeholder="card-number" required>
+      <label for="expiry">Expiry Date</label>
+      <input type="date" id="expiry" name="expiry" placeholder="card-date" required>
+      <label for="cvc">CVC</label>
+      <input type="text" id="cvc" name="cvc" placeholder="cvc" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="your-email@example.com" required>
+
+      <!-- Delivery Options -->
+      <label for="delivery-options">Choose Delivery Method:</label>
+      <select id="delivery-options" onchange="updateDeliveryFee()">
+          <option value="10" data-info="Arrives in 3-5 days">Standard Delivery ($10)</option>
+          <option value="20" data-info="Arrives in 1-2 days">Express Delivery ($20)</option>
+          <option value="0" data-info="Free for orders over $100">Free Shipping</option>
+      </select>
+      <span id="delivery-tooltip" class="tooltip"></span>
+
+      <!-- Discount Code -->
+      <div class="discount-section">
+          <label for="discount-code">Apply Discount Code:</label>
+          <input type="text" id="discount-code" placeholder="Enter code">
+          <button type="button" onclick="applyDiscount()">Apply</button>
+          <p id="discount-feedback"></p>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Submit Payment</button>
+  </form>
+
+  <div id="spinner" class="spinner" style="display:none;">Please wait while we process your payment...</div>
+
+  <!-- Receipt (Hidden by default) -->
+  <div id="receipt" style="display:none;">
+      <h3>Receipt</h3>
+      <ul id="receipt-items"></ul>
+      <p id="tax-rate"></p>
+      <p id="delivery-fee"></p>
+      <p>Total Before Tax: $<span id="total-before-tax"></span></p>
+      <p>Total Amount (after tax): $<span id="total-amount"></span></p>
+  </div>
+</section>
+
+  
+  
+
+
+  <main>
+    <article>
+
+      <!-- 
+        -...................... #HERO..........................
+      -->
+
+      <section class="hero" id="home" style="background-image: url('images/FRESH1.jpg')">
+        <section id="hero">
+          <div class="slider">
+              <div class="slides">
+                  <img src="images/WhatsApp Image 2024-08-02 at 5.05.45 AM (1).jpeg" alt="Grocery 1">
+                  <img src="images/WhatsApp Image 2024-08-02 at 5.06.14 AM (1).jpeg" alt="Grocery 2">
+                  <img src="images/grips.jpeg" alt="Grocery 3">
+                  <img src="images/WhatsApp Image 2024-08-15 at 6.06.49 AM (1).jpeg" alt="Grocery 4">
+                  <img src="images/TOMATOES.jpg " alt="Grocery 5">
+              </div>
+          </div>
+          <button id="hero-btn">Fresh Veggies</button>
+          <div id="grocery-list-popup">
+              <ul>
+                  <li>Broccoli</li>
+                  <li>Pineapple</li>
+                  <li>Mango</li>
+                  <li>Onion</li>
+                  <li>Ginger</li>
+              </ul>
+          </div>
+      
+         
+              
+                <div class="text-container">
+                  <p class="hero-text">Discover the unparalleled freshness and quality of our premium groceries.</p>
+                       <p>Our handpicked selection ensures that only the finest ingredients make it to your kitchen,<br> 
+                       delivering exceptional taste and nutrition with every bite. Experience the ultimate in freshness and flavor today!</p>
+                </div>
+                <button class="check-button">Check Me Out</button>
+      
+          </div>
+      </section>
+
+
+
+
+
+      <!----#PROMO---->
+    
+
+    <section class="section section-divider white promo">
+      <div class="container">
+        
+        <ul class="promo-list has-scrollbar">
+
+          <li class="promo-item">
+            <div class="promo-card">
+
+              <div class="card-icon">
+               
+              <h3 class="h3 card-title">Fresh Grocery!</h3>
+
+              <p class="card-text">
+                Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+              </p>
+              <img src="images/WhatsApp Image 2024-08-02 at 5.05.45 AM (1).jpeg" width="300" height="300" loading="lazy" alt="Maxican Pizza"
+
+                class="w-100 card-banner">
+              
+                
+            </div>
+          </li>
+
+          <li class="promo-item">
+            <div class="promo-card">
+
+              <h3 class="h3 card-title">FreshHarvest!</h3>
+
+              <p class="card-text">
+                Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+              </p>
+
+              <img src="images/gp.jpeg" width="300" height="300" loading="lazy" alt="Soft Drinks"
+                class="w-100 card-banner">
+
+            </div>
+          </li>
+
+          <li class="promo-item">
+            <div class="promo-card">
+
+              <h3 class="h3 card-title">PurePlatter Groceries!</h3>
+
+              <p class="card-text">
+                Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+              </p>
+
+              <img src="images/gp4.jpeg" width="300" height="300" loading="lazy" alt="French Fry"
+                class="w-100 card-banner">
+
+            </div>
+          </li>
+
+          <li class="promo-item">
+            <div class="promo-card">
+
+              <h3 class="h3 card-title">GreenLeave Essentials</h3>
+
+              <p class="card-text">
+                Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+              </p>
+
+              <img src="images/gp1.jpeg" width="300" height="300" loading="lazy" alt="Burger Kingo"
+                class="w-100 card-banner">
+
+            </div>
+          </li>
+
+          <li class="promo-item">
+            <div class="promo-card">
+
+              <h3 class="h3 card-title">Nature's Basket!</h3>
+
+              <p class="card-text">
+                Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+              </p>
+
+              <img src="images/gp3.jpeg" width="300" height="300" loading="lazy" alt="Chicken Masala"
+                class="w-100 card-banner">
+
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+
+
+
+
+
+
+        <!---about-->
+
+
+        <section class="about-us-section" id="about">
+          <h1>about us</h1>
+          <div class="about-image">
+              <img src="images/WhatsApp Image 2024-09-04 at 8.55.57 AM.jpeg" alt="About Us Background">
+              <div class="about-text">
+                  <h1 class="about-us-heading">About Us</h1>
+                  <p>Welcome to our world! We are dedicated to delivering exceptional experiences through innovation and dedication. Our team is committed to turning your visions into reality with creativity, expertise, and passion. Discover more about our dedicated team and how we can help you achieve excellence.</p>
+              </div>
+          </div>
+          
+          <h2 class="teamtittle">our team</h2>
+          <div class="team-container">
+              <div class="team-member">
+                  <img src="images/WhatsApp Image 2024-09-04 at 8.24.22 AM (1).jpeg" alt="Jane Doe">
+                  <div class="member-info">
+                      <h2>kuumson Doe</h2>
+                      
+                      <p> Cashier <br>
+      Processes transactions, handles payments, and issues receipts. <br>
+        Assists with returns and exchanges. <br>
+        Ensures a smooth checkout experience.</p>
+      </div>
+      </div>
+      <div class="team-member">
+      <img src="images/WhatsApp Image 2024-09-04 at 8.24.23 AM.jpeg" alt="John Smith">
+      <div class="member-info">
+      <h2>Gosphine</h2>
+      <p>Store Manager <br>
+        Oversees store operations and staff. <br>
+        Manages budgeting and financial reporting. <br>
+        Ensures sales targets and store policies are met. .</p>
+      </div>
+      </div>
+      <div class="team-member">
+      <img src="images/WhatsApp Image 2024-08-15 at 6.14.11 AM.jpeg" alt="Emily Johnson">
+      <div class="member-info">
+      <h2>AbdulMlik</h2>
+      <p> Floor Supervisor <br>
+        Manages store floor activities and staff. <br>
+        Ensures adherence to procedures . <br>
+        Oversees customer service on the floor</p>
+      </div>
+      </div>
+      
+      
+      <div class="team-member">
+      <img src="images/WhatsApp Image 2024-08-15 at 6.14.10 AM.jpeg" alt="Emily Johnson">
+      <div class="member-info">
+      <h2>Emilli Johnson</h2>
+      <p>Grocery Bagger <br>
+       Packs purchased items into <br>
+        Assists customers with carrying their bags if needed. <br>
+        Ensures bags are packed efficiently.</p>
+      </div>
+      </div>  
+      </div>
+      </section>
+
+    
+
+
+
+
+
+
+      <!---...................our live stream......................-->
+
+
+      <div class="video-container">
+        <div class="video-wrapper">
+          <h2 class="video-title">Product Demo</h2>
+          <video class="autoplay-video" muted loop playsinline>
+            <source src="images/SERVICE V3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="video-caption">This is a demonstration of our product in action, showcasing key features.</p>
+        </div>
+        
+        <div class="video-wrapper">
+          <h2 class="video-title">User Testimonial</h2>
+          <video class="autoplay-video" muted loop playsinline>
+            <source src="images/SERVICE V1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="video-caption">Hear from one of our satisfied customers about their experience.</p>
+        </div>
+        
+        <div class="video-wrapper">
+          <h2 class="video-title">Behind the Scenes</h2>
+          <video class="autoplay-video" muted loop playsinline>
+            <source src="images/SERVICE V.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="video-caption">Go behind the scenes to see how our team brings ideas to life.</p>
+        </div>
+      </div>
+      
+      
+
+
+
+
+
+
+      <!-- 
+        -...................... #product..................
+      -->
+
+   
+      <section class="section food-menu" id="product">
+        <div class="container">
+
+          <p class="section-subtitle">Popular Groceries</p>
+
+          <h2 class="h2 section-title">
+            Our Freshest <span class="span">Groceries</span>
+          </h2>
+
+          <p class="section-text">
+            Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+          </p>
+
+          <ul class="fiter-list">
+
+            <li>
+              <button class="filter-btn  active">All</button>
+            </li>
+
+            <li>
+              <button class="filter-btn">Tomato</button>
+            </li>
+
+            <li>
+              <button class="filter-btn">Cabbage</button>
+            </li>
+
+            <li>
+              <button class="filter-btn">Meats</button>
+            </li>
+
+            <li>
+              <button class="filter-btn">Vegitables</button>
+            </li>
+
+          </ul>
+
+          <ul class="food-menu-list">
+
+            <li>
+              <div class="food-menu-card">
+
+                <div class="card-banner">
+                  <img src="images/shrimps.jpeg" width="1200" height="1600" loading="lazy"
+                    alt="Fried Shrimps Unlimited" class="w-100">
+                    <button class="add-to-cart" onclick="addToCart('Shrimps', 69.00, 0.15, 'images/shrimps.jpeg')">Add to Cart</button>
+
+                  <div class="badge">-15%</div>
+
+                </div>
+
+                <div class="wrapper">
+                  <p class="category">Shrimps</p>
+
+                  <div class="rating-wrapper">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+                </div>
+
+                <h3 class="h3 card-title">Fried Shrimps</h3>
+
+                <div class="price-wrapper">
+
+                  <p class="price-text">Price:</p>
+
+                  <data class="price">$49.00</data>
+
+                  <del class="del" value="69.00">$69.00</del>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="food-menu-card">
+
+                <div class="card-banner">
+                  <img src="images/carrot1.jpeg" width="1200" height="1600"  loading="lazy"
+                    alt="Burger King Whopper" class="w-100">
+
+                  <div class="badge">-10%</div>
+
+                  <button class="add-to-cart" onclick="addToCart('Carrot', 39.00, 0.10, 'images/carrot1.jpeg')">Add to Cart</button>
+                </div>
+
+                <div class="wrapper">
+                  <p class="category">Carrot</p>
+
+                  <div class="rating-wrapper">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+                </div>
+
+                <h3 class="h3 card-title">Carrot King Whopper</h3>
+
+                <div class="price-wrapper">
+
+                  <p class="price-text">Price:</p>
+
+                  <data class="price" value="29.00">$29.00</data>
+
+                  <del class="del">$39.00</del>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="food-menu-card">
+
+                <div class="card-banner">
+                  <img src="images/bread.jpeg" width="1200" height="1600"  loading="lazy"
+                    alt="White Castle Pizzas" class="w-100">
+
+                  <div class="badge">-25%</div>
+
+                  <button class="add-to-cart" onclick="addToCart('Bread', 69.00, 0.25, 'images/bread.jpeg')">Add to Cart</button>
+
+                </div>
+
+                <div class="wrapper">
+                  <p class="category">Bread</p>
+
+                  <div class="rating-wrapper">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+                </div>
+
+                <h3 class="h3 card-title">Red Castle Bread</h3>
+
+                <div class="price-wrapper">
+
+                  <p class="price-text">Price:</p>
+
+                  <data class="price" value="49.00">$49.00</data>
+
+                  <del class="del">$69.00</del>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="food-menu-card">
+
+                <div class="card-banner">
+                  <img src="images/banana.jpeg" width="1200" height="1600"  loading="lazy"
+                    alt="Bell Banana Supreme" class="w-100">
+
+                  <div class="badge">-20%</div>
+
+                  <button class="add-to-cart" onclick="addToCart('Banana', 69.00, 0.20, 'images/banana.jpeg')">Add to Cart</button>
+
+                </div>
+
+                <div class="wrapper">
+                  <p class="category">Banana</p>
+
+                  <div class="rating-wrapper">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+                </div>
+
+                <h3 class="h3 card-title">Bell Banana Supreme</h3>
+
+                <div class="price-wrapper">
+
+                  <p class="price-text">Price:</p>
+
+                  <data class="price" value="59.00 ">$59.00</data>
+
+                  <del class="del">$69.00</del>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="food-menu-card">
+
+                <div class="card-banner">
+                  <img src="images/cabbage.jpeg" width="1200" height="1600"  loading="lazy"
+                    alt="Kung Pao Cabbage BBQ" class="w-100">
+
+                  <div class="badge">-5%</div>
+
+                  <button class="add-to-cart" onclick="addToCart('Cabbage', 69.00, 0.05, 'images/cabbage.jpeg')">Add to Cart</button>
+                </div>
+
+                <div class="wrapper">
+                  <p class="category">Cabbage</p>
+
+                  <div class="rating-wrapper">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+                </div>
+
+                <h3 class="h3 card-title">Kung Pao Cabbage BBQ</h3>
+
+                <div class="price-wrapper">
+
+                  <p class="price-text">Price:</p>
+
+                  <data class="price" value="49.00">$49.00</data>
+
+                  <del class="del">$69.00</del>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="food-menu-card">
+
+                <div class="card-banner">
+                  <img src="images/meat.jpeg" width="1200" height="1600"  loading="lazy"
+                    alt="Wendy's Chicken" class="w-100">
+
+                  <div class="badge">-15%</div>
+                  <button class="add-to-cart" onclick="addToCart('Chicken', 69.00, 0.15, 'images/meat.jpeg')">Add to Cart</button>
+                </div>
+
+                <div class="wrapper">
+                  <p class="category">Chicken</p>
+
+                  <div class="rating-wrapper">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+                </div>
+
+                <h3 class="h3 card-title">Wendy's Chicken</h3>
+
+                <div class="price-wrapper">
+
+                  <p class="price-text">Price:</p>
+
+                  <data class="price" value="49.00">$49.00</data>
+
+                  <del class="del">$69.00</del>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+
+        </div>
+      </section>
+
+      <!-------------------More Product----------------->
+
+      <section class="product-section" id="products">
+        <h2>Featured Products</h2>
+        <div class="product-slider">
+            
+            <div class="product">
+                <img id="popup-image" src="images/fresh-wet-fruits-ice.jpg" alt="Apple">
+                <h3 id="popup-title" class="product-name">Apple</h3>
+                <p id="popup-price">Price: $1.00 <span class="discount">-10%</span></p>
+                <p>Rating: ⭐⭐⭐⭐½</p>
+                <button class="add-to-cart" onclick="addToCart('Apple', 1.00, 0.10, 'images/fresh-wet-fruits-ice.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/Ligo.jpeg" alt="Ligo">
+                <h3 id="popup-title" class="product-name">Ligo</h3>
+                <p id="popup-price">Price: $0.50</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Ligo', 10.00, 0.00, 'images/Ligo.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/oranges-dropped-into-water.jpg" alt="Orange">
+                <h3 id="popup-title" class="product-name">Orange</h3>
+                <p id="popup-price">Price: $0.80 <span class="discount">-5%</span></p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Orange', 0.80, 0.05, 'images/oranges-dropped-into-water.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/glass-jar-full-milk.jpg" alt="Milk">
+                <h3 id="popup-title" class="product-name">Milk</h3>
+                <p id="popup-price">Price: $2.00</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Milk', 2.00, 0.00, 'images/glass-jar-full-milk.jpg')">Add to Cart</button>
+            </div>
+            
+            <div class="product">
+                <img src="images/eggs-isolated-white-surface.jpg" alt="Eggs">
+                <h3 id="popup-title" class="product-name">Eggs</h3>
+                <p id="popup-price">Price: $2.50 <span class="discount">-10%</span></p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Egg', 2.50, 0.10, 'images/eggs-isolated-white-surface.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+              <img src="images/cheese.jpeg" alt="Cheese">
+              <h3 id="popup-title" class="product-name">Cheese</h3>
+              <p id="popup-price">Price: $3.00 <span class="discount">-20%</span></p>
+              <p>Rating: ⭐⭐⭐⭐½</p>
+              <button class="add-to-cart" onclick="addToCart('Cheese', 3.00, 0.20, 'images/cheese.jpeg')">Add to Cart</button> <!-- Pass image URL -->
+          </div>
+          
+            
+            <div class="product">
+                <img src="images/fish.jpeg" alt="Fish">
+                <h3 id="popup-title" class="product-name">Fish</h3>
+                <p id="popup-price">Price: $10.00 <span class="discount">-20%</span></p>
+                <p>Rating: ⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Fish', 10.00, 0.20, 'images/fish.jpeg')">Add to Cart</button>
+            </div>
+
+
+            <div class="product">
+              <img src="images/flaour.jpeg" alt="Flour">
+              <h3 id="popup-title" class="product-name">Flour</h3>
+              <p id="popup-price">Price: $20.00 <span class="discount">-20%</span></p>
+              <p>Rating: ⭐⭐⭐⭐</p>
+              <button class="add-to-cart" onclick="addToCart('Flour', 20.00, 0.20, 'images/flaour.jpeg')">Add to Cart</button>
+          </div>
+
+          <div class="product">
+            <img src="images/oil.jpeg" alt="Oil">
+            <h3 id="popup-title" class="product-name">Oil</h3>
+            <p id="popup-price">Price: $10.00 <span class="discount">-20%</span></p>
+            <p>Rating: ⭐⭐⭐⭐</p>
+            <button class="add-to-cart" onclick="addToCart('Oil', 10.00, 0.20, 'images/oil.jpeg')">Add to Cart</button>
+        </div>
+
+
+          
+            <div class="product">
+                <img src="images/TOMATOES.jpg" alt="Tomato">
+                <h3 id="popup-title" class="product-name">Tomato</h3>
+                <p id="popup-price">Price: $1.00 <span class="discount">-5%</span></p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Tomato', 1.00, 0.05, 'images/TOMATOES.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/honey.jpeg" alt="Honey">
+                <h3 id="popup-title" class="product-name">Honey</h3>
+                <p id="popup-price">Price: $2.80<span class="discount">-5</span></p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Honey', 2.80, 0.05, 'images/honey.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/onion.jpeg" alt="Onion">
+                <h3 id="popup-title" class="product-name">Onion</h3>
+                <p id="popup-price">Price: $0.50</p>
+                <p>Rating: ⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Onion', 0.50, 0.0, 'images/onion.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/tasty.jpeg" alt="Tasty-Bite">
+                <h3 id="popup-title" class="product-name">Tasty-Bite</h3>
+                <p id="popup-price">Price: $1.20</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Tasty-Bite', 1.20, 0.00, 'images/tasty.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/cacumba.jpeg" alt="Cacumba">
+                <h3 id="popup-title" class="product-name">Cacumba</h3>
+                <p id="popup-price">Price: $1.00 <span class="discount">-10%</span></p>
+                <p>Rating: ⭐⭐⭐⭐½</p>
+                <button class="add-to-cart" onclick="addToCart('Cacumba',1.00, 0.10, 'images/cacumba.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/soursage.jpeg" alt="Soursage">
+                <h3 id="popup-title" class="product-name">Soursage</h3>
+                <p id="popup-price">Price: $0.90</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Soursage', 0.90, 0.00, 'images/soursage.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/fresh-broccoli-vegetable.jpg" alt="Broccoli">
+                <h3 id="popup-title" class="product-name">Broccoli</h3>
+                <p id="popup-price">Price: $1.50</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Broccoli', 1.50, 0.00, 'images/fresh-broccoli-vegetable.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/rice.jpeg" alt="Rice">
+                <h3 id="popup-title" class="product-name">Rice</h3>
+                <p id="popup-price">Price: $3.00</p>
+                <p>Rating: ⭐⭐⭐⭐½</p>
+                <button class="add-to-cart" onclick="addToCart('Rice', 3.00, 0.00, 'images/rice.jpeg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/tagliatelle-pasta-with-tomatoes-chicken.jpg" alt="Pasta">
+                <h3 id="popup-title" class="product-name">Pasta</h3>
+                <p id="popup-price">Price: $2.50</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Pasta', 2.50, 0.00, 'images/tagliatelle-pasta-with-tomatoes-chicken.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/milk-cereal.jpg" alt="Cereal">
+                <h3 id="popup-title" class="product-name">Cereal</h3>
+                <p id="popup-price">Price: $3.50 <span class="discount">-20%</span></p>
+                <p>Rating: ⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Cereal', 3.50, 0.20, 'images/milk-cereal.jpg')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/yogurt.jpg" alt="Yogurt">
+                <h3 id="popup-title" class="product-name">Yogurt</h3>
+                <p id="popup-price">Price: $1.50</p>
+                <p>Rating: ⭐⭐⭐⭐⭐</p>
+                <button class="add-to-cart" onclick="addToCart('Yogurt', 1.50, 0.00, 'images/yogurt.jpg')">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    
+
+
+
+
+      <!-- 
+        -...................... #CTA............................
+      -->
+
+      <section class="section section-divider white cta" style="background-image: url('images/FRESH1.jpg')">
+        <div class="container">
+
+          <div class="cta-content">
+
+            <h2 class="h2 section-title">
+              The Veggie Have Excellent Of
+              <span class="span">Quality Groceries!</span>
+            </h2>
+
+            <p class="section-text">
+              The Shop in Dansoman also catered to many outsiders who had fled overseas during
+              their trips
+            </p>
+
+            <button class="btn btn-hover">Order Now</button>
+          </div>
+
+          <figure class="cta-banner">
+            <img src="images/sale-shape.png" width="216" height="226" loading="lazy"
+              alt="get up to 50% off now" class="abs-img scale-up-anim">
+          </figure>
+
+        </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - ...............#DELIVERY...............
+      -->
+
+      <section class="section section-divider gray delivery">
+        <div class="container">
+
+          <div class="delivery-content">
+
+            <h2 class="h2 section-title">
+              A Moments Of Delivered On <span class="span">Right Time</span> & Place
+            </h2>
+
+            <p class="section-text">
+              The Shop in Dansoman also catered to many outsiders who had fled overseas during
+              their trips
+            </p>
+
+            <button class="btn btn-hover">Order Now</button>
+          </div>
+
+          <figure class="delivery-banner">
+            <img src="images/delivery-banner-bg.png" width="700" height="602" loading="lazy" alt="clouds"
+              class="w-100">
+
+            <img src="images/delivery-boy.svg" width="1000" height="880" loading="lazy" alt="delivery boy"
+              class="w-100 delivery-img" data-delivery-boy>
+          </figure>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - ...............#TESTIMONIALS.............
+      -->
+
+      <section class="section section-divider white testi">
+        <div class="container">
+
+          <p class="section-subtitle">Testimonials</p>
+
+          <h2 class="h2 section-title">
+            Our Customers <span class="span">Reviews</span>
+          </h2>
+
+          <p class="section-text">
+            Healthy groceries, healthy life-nourishing you with the freshest ingredients for a better tommorrow.
+          </p>
+
+          <ul class="testi-list has-scrollbar">
+
+            <li class="testi-item">
+              <div class="testi-card">
+
+                <div class="profile-wrapper">
+
+                  <figure class="avatar">
+                    <img src="images/avatar-1.jpg" width="80" height="80" loading="lazy" alt="Robert William">
+                  </figure>
+
+                  <div>
+                    <h3 class="h4 testi-name">Robert William</h3>
+
+                    <p class="testi-title">CEO Kingfisher</p>
+                  </div>
+
+                </div>
+
+                <blockquote class="testi-text">
+                  "I would be lost without groceries. I would like to personally thank you for your outstanding
+                  product."
+                </blockquote>
+
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testi-item">
+              <div class="testi-card">
+
+                <div class="profile-wrapper">
+
+                  <figure class="avatar">
+                    <img src="images/avatar-2.jpg" width="80" height="80" loading="lazy" alt="Thomas Josef">
+                  </figure>
+
+                  <div>
+                    <h3 class="h4 testi-name">Thomas Josef</h3>
+
+                    <p class="testi-title">CEO Getforce</p>
+                  </div>
+
+                </div>
+
+                <blockquote class="testi-text">
+                  "I would be lost without groceries. I would like to personally thank you for your outstanding
+                  product."
+                </blockquote>
+
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testi-item">
+              <div class="testi-card">
+
+                <div class="profile-wrapper">
+
+                  <figure class="avatar">
+                    <img src="images/avatar-3.jpg" width="80" height="80" loading="lazy" alt="Charles Richard">
+                  </figure>
+
+                  <div>
+                    <h3 class="h4 testi-name">Charles Richard</h3>
+
+                    <p class="testi-title">CEO Angela</p>
+                  </div>
+
+                </div>
+
+                <blockquote class="testi-text">
+                  "I would be lost without groceries. I would like to personally thank you for your outstanding
+                  product."
+                </blockquote>
+
+                <div class="rating-wrapper">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+
+
+
+
+
+      <!-- 
+        - ...........................#BANNER..........................
+      -->
+
+      <section class="section section-divider gray banner">
+        <div class="container">
+
+          <ul class="banner-list">
+
+            <li class="banner-item banner-lg">
+              <div class="banner-card">
+
+                <img src="images/FRUIT 3.jpg" width="550" height="450" loading="lazy"
+                  alt="Discount For Sweet Tasty Fruits!" class="banner-img">
+
+                <div class="banner-item-content">
+                  <p class="banner-subtitle">50% Off Now!</p>
+
+                  <h3 class="banner-title">Discount For Fresh Sweet Fruits!</h3>
+
+                  <p class="banner-text">Sale off 50% only this week</p>
+
+                  <button class="btn">Order Now</button>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="banner-item banner-sm">
+              <div class="banner-card">
+
+                <img src="images/FRESH1.jpg" width="550" height="465" loading="lazy" alt="Delicious Salad"
+                  class="banner-img">
+
+                <div class="banner-item-content">
+                  <h3 class="banner-title">Fresh Fruit</h3>
+
+                  <p class="banner-text">50% off Now</p>
+
+                  <button class="btn">Order Now</button>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="banner-item banner-sm">
+              <div class="banner-card">
+
+                <img src="images/FRESH2.jpg" width="550" height="465" loading="lazy" alt="American Sweet"
+                  class="banner-img">
+
+                <div class="banner-item-content">
+                  <h3 class="banner-title">American Strawberries</h3>
+
+                  <p class="banner-text">50% off Now</p>
+
+                  <button class="btn">Order Now</button>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="banner-item banner-md">
+              <div class="banner-card">
+
+                <img src="images/FRUIT 1.jpg" width="550" height="220" loading="lazy" alt="Tasty Buzzed Salad"
+                  class="banner-img">
+
+                <div class="banner-item-content">
+                  <h3 class="banner-title">Sweet Fruits</h3>
+
+                  <p class="banner-text">Sale off 50% only this week</p>
+
+                  <button class="btn">Order Now</button>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #BLOG
+      -->
+
+      <section class="section section-divider white blog" id="blog">
+        <div class="container">
+
+          <p class="section-subtitle">Latest Blog Posts</p>
+
+          <h2 class="h2 section-title">
+            This Is All About <span class="span">Groceries</span>
+          </h2>
+
+          <p class="section-text">
+            Food is any substance consumed to provide nutritional support for an organism.
+          </p>
+
+          <ul class="blog-list">
+
+            <li>
+              <div class="blog-card">
+
+                <div class="card-banner">
+                  <img src="images/PLATTE G.jpg" width="600" height="390" loading="lazy"
+                    alt="What Do You Think About Groceries Recipes?" class="w-100">
+
+                  <div class="badge">Salad</div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="card-meta-wrapper">
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="calendar-outline"></ion-icon>
+
+                      <time class="meta-info" datetime="2022-01-01">Jan 01 2024</time>
+                    </a>
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="person-outline"></ion-icon>
+
+                      <p class="meta-info">Jonathan Smith</p>
+                    </a>
+
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">What Do You Think About Groceries Recipes?</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Financial experts support or help you to to find out which way you can raise your funds more...
+                  </p>
+
+                  <a href="#" class="btn-link">
+                    <span>Read More</span>
+
+                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                  </a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <div class="card-banner">
+                  <img src="images/PLATTE1.jpg" width="600" height="390" loading="lazy"
+                    alt="Making Chicken Strips With New Delicious Ingridents." class="w-100">
+
+                  <div class="badge">Fruits</div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="card-meta-wrapper">
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="calendar-outline"></ion-icon>
+
+                      <time class="meta-info" datetime="2022-01-01">Jan 01 2024</time>
+                    </a>
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="person-outline"></ion-icon>
+
+                      <p class="meta-info">Jonathan Smith</p>
+                    </a>
+
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Making Africa Strips With New Delicious Ingridents.</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Financial experts support or help you to to find out which way you can raise your funds more...
+                  </p>
+
+                  <a href="#" class="btn-link">
+                    <span>Read More</span>
+
+                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                  </a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <div class="card-banner">
+                  <img src="images/PLATTE2.jpg" width="600" height="390" loading="lazy"
+                    alt="Innovative Hot Chessyraw Pasta Make Creator Fact." class="w-100">
+
+                  <div class="badge">Veggies</div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="card-meta-wrapper">
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="calendar-outline"></ion-icon>
+
+                      <time class="meta-info" datetime="2022-01-01">Jan 01 2024</time>
+                    </a>
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="person-outline"></ion-icon>
+
+                      <p class="meta-info">Jonathan Smith</p>
+                    </a>
+
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Innovative Hot Chessyraw Pasta Make Creator Fact.</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Financial experts support or help you to to find out which way you can raise your funds more...
+                  </p>
+
+                  <a href="#" class="btn-link">
+                    <span>Read More</span>
+
+                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                  </a>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+    </article>
+  
+  </main>
+
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+
+    <!--.............contact-section..........-->
+
+    <section class="location" id="contact-us">
+      <h1> Locate Us With Ease</h1>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1016406.4956943382!2d-1.30261225!3d5.66418445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfde34e8ffe3e31b%3A0xa941ede83ba36b5f!2sCentral%20Region!5e0!3m2!1sen!2sgh!4v1723998276442!5m2!1sen!2sgh" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  </section>
+
+  <section class="contact-us">
+
+      <div class="row">
+
+          <div class="contact-col">
+
+              <div>
+                  <i class="fa fa-home"></i>
+                  <span>
+                      <h5>xyz b0&0, ABC Building</h5>
+                      <p>Ghana Kasoa</p>
+                  </span>
+              </div>
+              <div>
+                  <i class="fa fa-envelope-o"></i>
+                  <span>
+                      <h5>veggiepick@gmail.com</h5>
+                      <p>Email us your query</p>
+                  </span>
+              </div>
+
+              <div>
+                  <i class="fa fa-phone"></i>
+                  <span>
+                      <h5>+233-55-666-6555</h5>
+                      <p>Monday to Sunday, 10am to 4pm</p>
+                  </span>
+              </div>
+
+          </div>
+
+        
+
+      </div>
+
+  </section>
+  
+
+    <div class="footer-top" style="background-image: url('images/footer-illustration.png')">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="" class="logo">Veggie<span class="span">.</span></a>
+
+          <p class="footer-text">
+            Financial experts support or help you to to find out which way you can raise your funds more.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-pinterest"></ion-icon>
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Info</p>
+          </li>
+
+          <li>
+            <p class="footer-list-item">+1 (062) 109-9222</p>
+          </li>
+
+          <li>
+            <p class="footer-list-item">Info@YourGmail24.com</p>
+          </li>
+
+          <li>
+            <address class="footer-list-item">153 Kasoa, CP-Junction, MT 09514</address>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Opening Hours</p>
+          </li>
+
+          <li>
+            <p class="footer-list-item">Monday-Friday: 08:00-22:00</p>
+          </li>
+
+          <li>
+            <p class="footer-list-item">Tuesday 4PM: Till Mid Night</p>
+          </li>
+
+          <li>
+            <p class="footer-list-item">Saturday: 10:00-16:00</p>
+          </li>
+
+        </ul>
+
+        <form action="" class="footer-form">
+
+          <p class="footer-list-title">Book a Package</p>
+
+          <div class="input-wrapper">
+
+            <input type="text" name="full_name" required placeholder="Your Name" aria-label="Your Name"
+              class="input-field">
+
+            <input type="email" name="email_address" required placeholder="Email" aria-label="Email"
+              class="input-field">
+
+          </div>
+
+          <div class="input-wrapper">
+
+            <select name="total_person" aria-label="Total person" class="input-field">
+              <option value="person">Person</option>
+              <option value="2 person">2 Person</option>
+              <option value="3 person">3 Person</option>
+              <option value="4 person">4 Person</option>
+              <option value="5 person">5 Person</option>
+            </select>
+
+            <input type="date" name="booking_date" aria-label="Reservation date" class="input-field">
+
+          </div>
+
+          <textarea name="message" required placeholder="Message" aria-label="Message" class="input-field"></textarea>
+
+          <button type="submit" class="btn">Book a Package</button>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright-text">
+          &copy; 2022 <a href="#" class="copyright-link">DisciplineTech</a> All Rights Reserved.
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
+    <ion-icon name="chevron-up"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

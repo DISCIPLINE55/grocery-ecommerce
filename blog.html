@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop fresh groceries, fruits, vegetables, and more. Get discounts and fast delivery!">
+  <meta name="keywords" content="grocery, fruits, vegetables, online shopping">
+  <meta name="author" content="Abudul Salam Sahadatu">
+  <title>Veggie - Supper Marvelous Groceries in town!</title>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'GA_TRACKING_ID');
+    </script>
+  
+  
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="images/our logo.jpg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Rubik:wght@400;500;600;700&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="images/hero-banner.png" media="min-width(768px)">
+  <link rel="preload" as="image" href="images/hero-banner-bg.png" media="min-width(768px)">
+  <link rel="preload" as="image" href="images/hero-bg.jpg">
+
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+<!-- Updated Header -->
+<header class="header" data-header>
+  <div class="container">
+
+    <h1>
+      <a href="/index.html" class="logo" aria-label="Go to Home"><img src="/images/our logo.jpg"  alt="logo"></a>
+    </h1>
+
+    <nav class="navbar" data-navbar>
+     
+      <ul class="navbar-list">
+        <li class="nav-item">
+          <a href="/index.html" class="navbar-link" data-nav-link aria-label="Go to Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about.html" class="navbar-link" data-nav-link aria-label="Learn more about us">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="/Product.html" class="navbar-link" data-nav-link aria-label="View products">Product</a>
+        </li>
+        <li class="nav-item">
+          <a href="/blog.html" class="navbar-link" data-nav-link aria-label="Read our blog">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="cart-icon" class="navbar-link" data-nav-link aria-label="Shopping cart">
+            <i class="fa fa-shopping-cart"></i></a>
+          <span id="cart-notification">0</span> <!-- Cart item count -->
+        </li>
+
+        <li class="nav-item">
+          <a href="/contact.html" class="navbar-link" data-nav-link aria-label="Contact us">Contact Us</a>
+        </li>
+       
+        <li class="nav-item">
+          <a href="/login.html" class="navbar-link" data-nav-link aria-label="SignUp">SignUp</a>
+        </li>
+        <li class="search-item">
+          <a href="#" class="navbar-link" data-nav-link><i class="fa fa-search" aria-label="Search products" onclick="searchProducts()"></i></a>
+          <input type="text" id="search-input" class="search-input" placeholder="Search for products..." aria-label="Search" oninput="searchProducts()">
+        </li>
+      </ul>
+
+      <!-- Search Popup -->
+      <div class="search-container">
+        <div id="search-popup" class="search-popup" style="display: none;">
+          <img id="popup-image" src="" alt="Product Image" loading="lazy" />
+          <div>
+            <h3 id="popup-title"></h3>
+            <p id="popup-price"></p>
+          </div>
+        </div>
+      </div>
+      <p id="no-results-message" style="display: none;">No results found!</p>
+    </nav>
+
+    <button class="nav-toggle-btn" aria-label="Toggle Menu" data-menu-toggle-btn>
+      <span class="line top"></span>
+      <span class="line middle"></span>
+      <span class="line bottom"></span>
+    </button>
+  </div>
+</header>
+      
+
+
+  <div class="shop">
+    <!-- Shopping Cart (Hidden until toggle) -->
+    <div id="cart-modal" class="modal" style="display:none;">
+      <h2>Your Orders!</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="total-price">0.00</span></p>
+      <button class="btn" onclick="checkout()">Proceed to Payment</button>
+    </div>
+  </div>
+  
+  <!-- Payment Section (Hidden by default) -->
+ <section id="payment-section" style="display:none;">
+  <div class="close-btn" onclick="closePaymentSection()">✖</div>
+  <h2>Payment</h2>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+      <div class="progress" id="progress" style="width: 33%;"></div>
+  </div>
+
+  <form id="payment-form">
+      <!-- Card Details -->
+      <label for="card-number">Card Number</label>
+      <input type="text" id="card-number" name="card-number" placeholder="card-number" required>
+      <label for="expiry">Expiry Date</label>
+      <input type="date" id="expiry" name="expiry" placeholder="card-date" required>
+      <label for="cvc">CVC</label>
+      <input type="text" id="cvc" name="cvc" placeholder="cvc" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="your-email@example.com" required>
+
+      <!-- Delivery Options -->
+      <label for="delivery-options">Choose Delivery Method:</label>
+      <select id="delivery-options" onchange="updateDeliveryFee()">
+          <option value="10" data-info="Arrives in 3-5 days">Standard Delivery ($10)</option>
+          <option value="20" data-info="Arrives in 1-2 days">Express Delivery ($20)</option>
+          <option value="0" data-info="Free for orders over $100">Free Shipping</option>
+      </select>
+      <span id="delivery-tooltip" class="tooltip"></span>
+
+      <!-- Discount Code -->
+      <div class="discount-section">
+          <label for="discount-code">Apply Discount Code:</label>
+          <input type="text" id="discount-code" placeholder="Enter code">
+          <button type="button" onclick="applyDiscount()">Apply</button>
+          <p id="discount-feedback"></p>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Submit Payment</button>
+  </form>
+
+  <div id="spinner" class="spinner" style="display:none;">Please wait while we process your payment...</div>
+
+  <!-- Receipt (Hidden by default) -->
+  <div id="receipt" style="display:none;">
+      <h3>Receipt</h3>
+      <ul id="receipt-items"></ul>
+      <p id="tax-rate"></p>
+      <p id="delivery-fee"></p>
+      <p>Total Before Tax: $<span id="total-before-tax"></span></p>
+      <p>Total Amount (after tax): $<span id="total-amount"></span></p>
+  </div>
+</section>
+
+  
+  
+
+      <!-- 
+        -...................... #HERO..........................
+      -->
+
+      <section class="hero" id="home" style="background-image: url('images/FRESH1.jpg')">
+
+        
+      <!-- 
+        - #BLOG
+      -->
+
+      <section class="section section-divider white blog" id="blog">
+        <div class="container">
+
+          <p class="section-subtitle">Latest Blog Posts</p>
+
+          <h2 class="h2 section-title">
+            This Is All About <span class="span">Groceries</span>
+          </h2>
+
+          <p class="section-text">
+            Food is any substance consumed to provide nutritional support for an organism.
+          </p>
+
+          <ul class="blog-list">
+
+            <li>
+              <div class="blog-card">
+
+                <div class="card-banner">
+                  <img src="images/PLATTE G.jpg" width="600" height="390" loading="lazy"
+                    alt="What Do You Think About Groceries Recipes?" class="w-100">
+
+                  <div class="badge">Salad</div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="card-meta-wrapper">
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="calendar-outline"></ion-icon>
+
+                      <time class="meta-info" datetime="2022-01-01">Jan 01 2024</time>
+                    </a>
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="person-outline"></ion-icon>
+
+                      <p class="meta-info">Jonathan Smith</p>
+                    </a>
+
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">What Do You Think About Groceries Recipes?</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Financial experts support or help you to to find out which way you can raise your funds more...
+                  </p>
+
+                  <a href="#" class="btn-link">
+                    <span>Read More</span>
+
+                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                  </a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <div class="card-banner">
+                  <img src="images/PLATTE1.jpg" width="600" height="390" loading="lazy"
+                    alt="Making Chicken Strips With New Delicious Ingridents." class="w-100">
+
+                  <div class="badge">Fruits</div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="card-meta-wrapper">
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="calendar-outline"></ion-icon>
+
+                      <time class="meta-info" datetime="2022-01-01">Jan 01 2024</time>
+                    </a>
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="person-outline"></ion-icon>
+
+                      <p class="meta-info">Jonathan Smith</p>
+                    </a>
+
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Making Africa Strips With New Delicious Ingridents.</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Financial experts support or help you to to find out which way you can raise your funds more...
+                  </p>
+
+                  <a href="#" class="btn-link">
+                    <span>Read More</span>
+
+                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                  </a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <div class="card-banner">
+                  <img src="images/PLATTE2.jpg" width="600" height="390" loading="lazy"
+                    alt="Innovative Hot Chessyraw Pasta Make Creator Fact." class="w-100">
+
+                  <div class="badge">Veggies</div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="card-meta-wrapper">
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="calendar-outline"></ion-icon>
+
+                      <time class="meta-info" datetime="2022-01-01">Jan 01 2024</time>
+                    </a>
+
+                    <a href="#" class="card-meta-link">
+                      <ion-icon name="person-outline"></ion-icon>
+
+                      <p class="meta-info">Jonathan Smith</p>
+                    </a>
+
+                  </div>
+
+                  <h3 class="h3">
+                    <a href="#" class="card-title">Innovative Hot Chessyraw Pasta Make Creator Fact.</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Financial experts support or help you to to find out which way you can raise your funds more...
+                  </p>
+
+                  <a href="#" class="btn-link">
+                    <span>Read More</span>
+
+                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                  </a>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+            
+      </section>
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright-text">
+          &copy; 2022 <a href="#" class="copyright-link">codewithsahadee</a> All Rights Reserved.
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
+    <ion-icon name="chevron-up"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
