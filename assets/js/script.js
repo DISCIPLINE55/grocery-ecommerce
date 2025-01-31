@@ -391,6 +391,8 @@ document.getElementById('payment-form').addEventListener('submit', function(even
 
 function showSpinner() {
     document.getElementById('spinner').style.display = 'flex';
-}
+};
 
 
+// Automatically update the footer date
+document.getElementById('currentYear').textContent = new Date().getFullYear();

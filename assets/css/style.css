@@ -261,7 +261,7 @@ body.active { overflow: hidden; }
   padding-block-end: 40px;
 }
 
-.has-scrollbar::-webkit-scrollbar { height: 12px; }
+.has-scrollbar::-webkit-scrollbar { height: 15px; }
 
 .has-scrollbar::-webkit-scrollbar-button { width: calc(25% - 40px); }
 
@@ -329,7 +329,7 @@ body.active { overflow: hidden; }
   --color: var(--white);
   --btn-color: var(--champagne-pink);
   position: absolute;
-  height: 150px;
+  height: 100px;
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -364,8 +364,8 @@ body.active { overflow: hidden; }
 
 .header .container img{
   height: auto;
-  max-width: 100%;
-  width: 150px;
+  max-width: 80%;
+  width: 100px;
   object-fit: contain;
   border-radius: 10px;
 }
@@ -383,6 +383,8 @@ body.active { overflow: hidden; }
 }
 
 .line {
+  position: relative;
+  left: 300px;
   width: 10px;
   height: 3px;
   background-color: var(--btn-color);
@@ -403,9 +405,9 @@ body.active { overflow: hidden; }
 .navbar {
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: 70%;
   transform: translateX(-50%);
-  width: calc(100% - 30px);
+  width: calc(80% - 100px);
   background-color: var(--white);
   padding-inline: 20px;
   box-shadow: var(--shadow-1);
@@ -416,7 +418,7 @@ body.active { overflow: hidden; }
 }
 
 .navbar.active {
-  height: 373px;
+  height: 375px;
   visibility: visible;
 }
 
@@ -437,13 +439,13 @@ body.active { overflow: hidden; }
 
   /* Styles for the cart notification */
   #cart-notification {
-    background-color: red;
+    background-color: rgb(255, 128, 0);
     color: white;
     border-radius: 50%;
     padding: 1px 1px;
     position: relative;
-    top: -50px;
-    right: -35px;
+    top: -40px;
+    right: -30px;
     display: initial;
   }
   
@@ -465,7 +467,7 @@ body.active { overflow: hidden; }
     display: none;
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 999;
+    z-index: 1000;
     width: 5%;
   }
   
@@ -826,18 +828,11 @@ button {
 }
 
 
-
-
-
-
-
-
-
 /* Hero Section */
 #hero {
   position: relative;
   width: 100%;
-  height: 70vh;
+  height: 75vh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -855,13 +850,13 @@ button {
 
 .slides {
   display: flex;
-  width: 500%;
-  height: 100%;
-  animation: slide 5s infinite;
+  width:500%;
+  height: 500px;
+  animation: slide 15s infinite;
 }
 
 .slides img {
-  width: 70%;
+  width: 80%;
   height: 100%;
   object-fit: cover;
 }
@@ -877,116 +872,6 @@ button {
   75% {transform: translateX(-60%);}
   95% {transform: translateX(-60%);}
   100% {transform: translateX(-80%);}
-}
-
-/* Hero Button */
-#hero-btn {
-  margin-bottom: 400px;
-  position: relative;
-  z-index: 10;
-  padding: 15px 30px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-#hero-btn:hover {
-  transform: translateY(-5px);
-}
-
-
-
-
-/* Pop-up List */
-#grocery-list-popup {
-  position: absolute;
-  top: 60px;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-
-#grocery-list-popup ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-#grocery-list-popup ul li {
-  padding: 5px 0;
-  font-weight: bold;
-  opacity: 0;
-  animation: popUpInOut 2s ease-in-out infinite;
-}
-
-/* Pop-up and Pop-in Animation */
-@keyframes popUpInOut {
-  0%, 100% {
-      opacity: 0;
-      transform: translateY(10px);
-  }
-  50% {
-      opacity: 1;
-      transform: translateY(0);
-  }
-}
-
-#grocery-list-popup ul li:nth-child(1) {
-  animation-delay: 0s;
-}
-
-#grocery-list-popup ul li:nth-child(2) {
-  animation-delay: 0.4s;
-}
-
-#grocery-list-popup ul li:nth-child(3) {
-  animation-delay: 0.8s;
-}
-
-#grocery-list-popup ul li:nth-child(4) {
-  animation-delay: 1.2s;
-}
-
-#grocery-list-popup ul li:nth-child(5) {
-  animation-delay: 1.6s;
-}
-
-.text-container {
-  position: absolute;
-  left: 0;
-  transform: translateX(-100%);
-  animation: spreadText 2s forwards;
-  color: #fff; /* Adjust text color as needed */
-  padding: 20px;
-}
-
-.hero-text{
-  font-size: 1.5rem;
-  line-height: 1.5;
-}
-
-.check-button {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background-color: #007bff; /* Adjust button color */
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
-
-.check-button:hover {
-  transform: scale(1.1);
-  background-color: #0056b3; /* Adjust hover color */
 }
 
 @keyframes spreadText {
@@ -1005,50 +890,6 @@ button {
 }
 
 
-
-
-
-.hero-banner { display: none; }
-
-.hero {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  padding-block: 20px 50px;
-  text-align: center;
-}
-
-.hero-subtitle {
-  color: var(--dark-orange);
-  font-family: var(--ff-shadows-into-light);
-  font-size: var(--fs-3);
-  letter-spacing: 1px;
-  margin-block-end: 25px;
-}
-
-.hero-title {
-  color: var(--champagne-pink);
-  max-width: 12ch;
-  margin-inline: auto;
-}
-
-.hero-text {
-  color: var(--desert-sand);
-  margin-block: 15px 30px;
-  max-width: 44ch;
-  margin-inline: auto;
-}
-
-.hero .btn { margin-inline: auto; }
-
-.hero .btn:is(:hover, :focus) {
-  background-color: var(--white);
-  color: var(--black);
-}
-
-
-
-
 /*-----------------------------------*\
   #HERO
 \*-----------------------------------*/
@@ -1059,40 +900,9 @@ button {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding-block: 145px 60px;
+  padding-block: 130px 60px;
   text-align: center;
 }
-
-.hero-subtitle {
-  color: var(--dark-orange);
-  font-family: var(--ff-shadows-into-light);
-  font-size: var(--fs-3);
-  letter-spacing: 1px;
-  margin-block-end: 25px;
-}
-
-.hero-title {
-  color: var(--champagne-pink);
-  max-width: 12ch;
-  margin-inline: auto;
-}
-
-.hero-text {
-  color: var(--desert-sand);
-  margin-block: 15px 30px;
-  max-width: 44ch;
-  margin-inline: auto;
-}
-
-.hero .btn { margin-inline: auto; }
-
-.hero .btn:is(:hover, :focus) {
-  background-color: var(--white);
-  color: var(--black);
-}
-
-
-
 
 
 /*-----------------------------------*\
@@ -1286,7 +1096,7 @@ button {
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
-  padding: 10px;
+  padding: 75px;
   text-align: center;
   width: 100%;
   transition: opacity all 0.3s;
@@ -1300,6 +1110,7 @@ button {
 .member-info h2 {
   margin: 0;
   font-size: 1em;
+  color:#218838;
 }
 
 .member-info p {
@@ -1336,7 +1147,7 @@ button {
 /* Heading above the video */
 .video-title {
   font-size: 1.5rem;
-  color: #333;
+  color: #020000;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -1344,7 +1155,7 @@ button {
 /* Caption under the video */
 .video-caption {
   font-size: 1rem;
-  color: #666;
+  color: #060606;
   margin-top: 10px;
   text-align: center;
 }
@@ -1551,7 +1362,7 @@ video {
 
 .product p {
   font-size: 16px;
-  color: #333;
+  color: #020000;
 }
 
 /* Update for Add to Cart button */
@@ -1678,9 +1489,6 @@ video {
   transform: translateX(-80px);
   transition: var(--transition-2);
 }
-
-
-
 
 
 /*-----------------------------------*\
